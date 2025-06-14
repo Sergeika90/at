@@ -1,0 +1,3 @@
+default.baseUrl=https://bonigarcia.dev/selenium-webdriver-java/
+test.baseUrl=https://bonigarcia.test/selenium-webdriver-java/
+dev.baseUrl=https://bonigarcia.dev/selenium-webdriver-java/

@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+group 'dev.sergei.selenium'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'com.codeborne:selenide:7.2.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'io.qameta.allure:allure-selenide:2.27.0'
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty 'allure.results.directory', 'build/allure-results'
+    // передаём системное свойство env из командной строки Gradle, чтобы оно было доступно в тестах
+    systemProperty 'env', System.getProperty('env', 'default')
+}
+
+allure {
+    version = '2.27.0'
+    autoconfigure = true
+    report {
+        version = '2.27.0'
+    }
+}
