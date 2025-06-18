@@ -14,6 +14,7 @@ dependencies {
     testImplementation 'com.codeborne:selenide:7.2.1'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
     testImplementation 'io.qameta.allure:allure-selenide:2.27.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.4.0' // версия на момент 2025 год
 }
 
 test {

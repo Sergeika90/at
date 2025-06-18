@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -13,6 +15,8 @@ public class BaseTest {
 
     @BeforeAll
     public static void setUp() {
+        WebDriverManager.chromedriver().setup();  // вот эта строка отвечает за автоматическую установку драйвера
+
         Configuration.browser = "chrome";
         Configuration.browserCapabilities = new ChromeOptions()
                 .addArguments("--headless=new")
