@@ -3,7 +3,7 @@ version: "3.8"
 services:
   jenkins:
     image: jenkins/jenkins:lts-jdk17
-    platform: linux/amd64  # Если ARM-версия работает плохо
+    platform: linux/amd64  # Если ARM не работает стабильно
     container_name: jenkins
     ports:
       - "8080:8080"
@@ -23,7 +23,7 @@ services:
       - testnet
 
   chrome:
-    image: selenium/node-chrome:4.20.0-arm64  # ARM-совместимый образ!
+    image: selenium/standalone-chrome:4.20.0  # Работает на ARM (автоматически выбирает правильную версию)
     shm_size: 2g
     depends_on:
       - selenium-hub
