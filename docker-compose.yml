@@ -3,7 +3,7 @@ version: "3.8"
 services:
   jenkins:
     image: jenkins/jenkins:lts-jdk17
-    platform: linux/amd64  # Если ARM не работает стабильно
+    platform: linux/arm64  # Явно указываем ARM для M1
     container_name: jenkins
     ports:
       - "8080:8080"
@@ -16,6 +16,7 @@ services:
 
   selenium-hub:
     image: selenium/hub:4.20.0
+    platform: linux/arm64  # Явно указываем ARM
     container_name: selenium-hub
     ports:
       - "4444:4444"
@@ -23,7 +24,8 @@ services:
       - testnet
 
   chrome:
-    image: selenium/standalone-chrome:4.20.0  # Работает на ARM (автоматически выбирает правильную версию)
+    image: selenium/node-chrome:4.20.0
+    platform: linux/arm64  # Критично важно для M1
     shm_size: 2g
     depends_on:
       - selenium-hub
