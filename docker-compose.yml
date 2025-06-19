@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
   jenkins:
-    image: jenkins/jenkins:lts-jdk17  # Используем образ с поддержкой ARM
-    platform: linux/amd64             # Форсируем работу через Rosetta 2 (если нужно)
+    image: jenkins/jenkins:lts-jdk17
+    platform: linux/amd64  # Если ARM-версия работает плохо
     container_name: jenkins
     ports:
       - "8080:8080"
@@ -15,7 +15,7 @@ services:
       - testnet
 
   selenium-hub:
-    image: seleniarm/hub:4.20.0       # Официальный образ для ARM (не SeleniumHQ!)
+    image: selenium/hub:4.20.0
     container_name: selenium-hub
     ports:
       - "4444:4444"
@@ -23,7 +23,7 @@ services:
       - testnet
 
   chrome:
-    image: seleniarm/node-chrome:4.20.0  # ARM-совместимый образ Chrome
+    image: selenium/node-chrome:4.20.0-arm64  # ARM-совместимый образ!
     shm_size: 2g
     depends_on:
       - selenium-hub
@@ -31,7 +31,7 @@ services:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - SE_NODE_OVERRIDE_MAX_SESSIONS=true  # Опционально для параллельных тестов
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
     networks:
       - testnet
 
