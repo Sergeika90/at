@@ -3,8 +3,8 @@ version: "3.8"
 services:
   jenkins:
     image: jenkins/jenkins:lts-jdk17
-    platform: linux/arm64  # Явно указываем ARM для M1
     container_name: jenkins
+    user: root  # нужно для доступа к docker.sock
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -13,29 +13,35 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - testnet
+    platform: linux/arm64  # указано, но можно убрать, если всё работает
 
   selenium-hub:
-    image: selenium/hub:4.20.0
-    platform: linux/arm64  # Явно указываем ARM
+    image: selenium/hub:4.20.0-20240527
     container_name: selenium-hub
     ports:
       - "4444:4444"
     networks:
       - testnet
+    environment:
+      - SE_SESSION_REQUEST_TIMEOUT=60
+      - SE_SESSION_RETRY_INTERVAL=1
+    platform: linux/arm64
 
   chrome:
-    image: selenium/node-chrome:4.20.0
-    platform: linux/arm64  # Критично важно для M1
-    shm_size: 2g
+    image: selenium/node-chrome:4.20.0-20240527
+    container_name: chrome
     depends_on:
       - selenium-hub
+    shm_size: 2g
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=1
     networks:
       - testnet
+    platform: linux/arm64
 
 volumes:
   jenkins_home:
