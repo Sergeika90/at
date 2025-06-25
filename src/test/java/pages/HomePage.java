@@ -7,9 +7,9 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
 public class HomePage {
-    private SelenideElement mainHeader = $(".display-4");
-    private SelenideElement gettingStartedLink = $("a[href='web-form.html']");
-    private SelenideElement gettingStartedSection = $(".display-6");
+    public SelenideElement mainHeader = $(".display-4");
+    public SelenideElement gettingStartedLink = $("a[href='web-form.html']");
+    public SelenideElement gettingStartedSection = $(".display-6");
 
     @Step("Получить текст главного заголовка")
     public String getMainHeaderText() {

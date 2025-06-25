@@ -8,9 +8,7 @@ import pages.HomePage;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HomePageTest extends BaseTest {
-
-    private final HomePage homePage = new HomePage();
-
+    HomePage homePage = new HomePage();
     @Test
     @Description("Verify the main header text on homepage")
     public void testMainHeaderText() {
