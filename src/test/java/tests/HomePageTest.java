@@ -1,15 +1,18 @@
 package tests;
 
-import io.qameta.allure.Allure;
-import io.qameta.allure.Description;
+import io.qameta.allure.*;
 import org.junit.jupiter.api.Test;
 import pages.HomePage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Epic("Web Tests")
+@Feature("Main Page")
 public class HomePageTest extends BaseTest {
     HomePage homePage = new HomePage();
     @Test
+    @Story("Header Validation")
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify the main header text on homepage")
     public void testMainHeaderText() {
         Allure.step("Получаем текст главного заголовка", () -> {

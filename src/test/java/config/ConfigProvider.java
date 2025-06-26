@@ -27,4 +27,15 @@ public class ConfigProvider {
     public static String getEnv() {
         return env;
     }
+
+    // Добавляем новый метод
+    public static String getSeleniumGridUrl() {
+        // Сначала проверяем системное свойство
+        String remoteUrl = System.getProperty("selenide.remote");
+        if (remoteUrl != null && !remoteUrl.isEmpty()) {
+            return remoteUrl;
+        }
+        // Затем проверяем свойство в файле конфигурации
+        return props.getProperty(env + ".seleniumGridUrl", "http://localhost:4444");
+    }
 }

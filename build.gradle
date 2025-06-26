@@ -10,22 +10,42 @@ repositories {
     mavenCentral()
 }
 
+// Указываем единую версию Allure для всех компонентов
 ext {
-    lombokVersion = '1.18.36'
-    allureVersion = '2.29.1'
+    allureVersion = '2.27.0' // Используем ту же версию, что и в allure-selenide
 }
 
 dependencies {
-    testImplementation "com.codeborne:selenide:7.9.3"
+    testImplementation 'com.codeborne:selenide:7.9.3'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
-    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
-    testImplementation 'io.qameta.allure:allure-selenide:2.27.0'
-    //testImplementation 'io.github.bonigarcia:webdrivermanager:5.4.0' // версия на момент 2025 год
-    testImplementation 'org.slf4j:slf4j-simple:2.0.13'
+
+    // Allure зависимости (все одной версии!)
+    testImplementation 'io.qameta.allure:allure-selenide:2.19.0'
+    testImplementation 'io.qameta.allure:allure-junit5:2.19.0'
+}
+
+allure {
+    version = '2.19.0' // Должно совпадать с версиями зависимостей
+
+    // Новая правильная конфигурация для Gradle 8.5+
+    adapter {
+        autoconfigure = true
+        aspectjweaver = true
+        frameworks {
+            junit5 {
+                enabled = true
+            }
+        }
+    }
 }
 
 test {
     useJUnitPlatform()
-    // передаём системное свойство env из командной строки Gradle, чтобы оно было доступно в тестах
-    systemProperty 'env', System.getProperty('env', 'default')
+    systemProperties = [
+            'env': System.getProperty('env', 'default'),
+            'selenide.screenshots': 'true',
+            'selenide.savePageSource': 'true',
+            'allure.results.directory': 'build/allure-results',
+            'allure.report.directory': 'build/allure-report'
+    ]
 }
