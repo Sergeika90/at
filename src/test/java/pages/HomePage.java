@@ -9,7 +9,7 @@ import io.qameta.allure.Step;
 public class HomePage {
     public SelenideElement mainHeader = $(".display-4");
     public SelenideElement gettingStartedLink = $("a[href='web-form.html']");
-    public SelenideElement gettingStartedSection = $(".display-66");
+    public SelenideElement gettingStartedSection = $(".display-6");
 
     @Step("Получить текст главного заголовка")
     public String getMainHeaderText() {
